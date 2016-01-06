@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Resistor Chain Diagram</title>
+	<link rel="stylesheet" href="app.css">
+</head>
+<body>
+	<div id="application" class="container">
+		<div class="row">
+			<div id="controls" class="col-sm-6 col-sm-push-6 col-md-8 col-md-push-4">
+				<form action="javascript://">
+					<div class="form-group">
+						<label for="inputChainResistanceValue">Total Resistance of Chain in Ohms</label>
+						<input class="form-control" type="text" id="inputChainResistanceValue" value="10k">
+					</div>
+					<div class="form-group">
+						<label for="inputVoltageValues">Voltage Steps in Volts</label>
+						<input class="form-control" type="text" id="inputVoltageValues" value="5, 2, 1, 0">
+					</div>
+				</form>
+			</div>
+			<div id="diagram" class="col-sm-6 col-sm-pull-6 col-md-4 col-md-pull-8">
+				<div>
+					<label for="">Electrical Diagram</label>
+					<div class="well well-diagram"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="app.js"></script>
+</body>
+</html>

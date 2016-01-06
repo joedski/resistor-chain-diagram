@@ -1,0 +1,31 @@
+{
+  "name": "resistor-chain-diagram",
+  "version": "0.0.0",
+  "description": "Draw a helpful diagram while doing the resistor chain calculation.",
+  "main": "app/index.js",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "electronics",
+    "calculator",
+    "electrical",
+    "graphical"
+  ],
+  "authors": [
+    "Joesph Sikorski <joedski@gmail.com>"
+  ],
+  "license": "ISC",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "raphael": "~2.1.4",
+    "backbone.marionette": "marionette#~2.4.4",
+    "bootstrap": "~3.3.6"
+  }
+}

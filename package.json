@@ -1,0 +1,25 @@
+{
+  "name": "resistor-chain-diagram",
+  "version": "0.0.0",
+  "description": "Draw a helpful diagram while doing the resistor chain calculation.",
+  "main": "app/index.js",
+  "dependencies": {
+    "coffee-script-brunch": "^1.8.3",
+    "css-brunch": "^1.7.0",
+    "javascript-brunch": "^1.8.0",
+    "less-brunch": "^1.8.1",
+    "mathjs": "^2.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "electronics",
+    "electrical",
+    "calculator",
+    "graphical"
+  ],
+  "author": "Joseph Sikorski <joedski@gmail.com>",
+  "license": "ISC"
+}
