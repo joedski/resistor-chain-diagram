@@ -54,3 +54,23 @@ function untransformPoint( transform, point, contextPath ) {
 		inverseMatrix.y( point[ 0 ], point[ 1 ] )
 	];
 }
+
+exports.boundingBoxContaining = boundingBoxContaining;
+function boundingBoxContaining( boundingBoxList ) {
+	var firstBox = boundingBoxList[ 0 ];
+	var restBoxes = boundingBoxList.slice( 1 );
+
+	return restBoxes.reduce( function combineBoxes( combined, smaller ) {
+		var newCombined = {
+			x: Math.min( combined.x, smaller.x ),
+			y: Math.min( combined.y, smaller.y ),
+			x2: Math.max( combined.x2, smaller.x2 ),
+			y2: Math.max( combined.y2, smaller.y2 )
+		};
+
+		newCombined.width = Math.abs( newCombined.x2 - newCombined.x );
+		newCombined.height = Math.abs( newCombined.y2 - newCombined.y );
+
+		return newCombined;
+	}, firstBox );
+}

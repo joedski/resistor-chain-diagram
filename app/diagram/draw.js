@@ -165,4 +165,42 @@ function drawToPaper( paper, drawing ) {
 	// Get bounding box of paths
 	// Add transform (to each part) to center bounding box
 	// Draw paths to drawing
+
+	var boundingBoxes = drawing.parts
+		.map( function boundingFoxesForPart( part ) {
+			return part.getBoundingBox();
+		})
+		.filter( function onlyNonNull( boundingBox ) {
+			return !! boundingBox;
+		})
+		;
+
+	var combinedBoundingBox = util.boundingBoxContaining( boundingBoxes );
+
+	if( ! combinedBoundingBox ) {
+		console.warn( "Drawing generated no bounding box!  It may be composed entirely of text." );
+	}
+
+	// Most accurate instantaneous view box is this, I think,
+	// though this isn't identical to svgEl.viewBox.baseVal.width and height.
+	// Those are 0 when nothing is in the svg Element.
+	var viewBox = {
+		x: paper.canvas.x.baseVal,
+		y: paper.canvas.y.baseVal,
+		width: paper.width,
+		height: paper.height
+	};
+
+	var targetOrigin = {
+		x: viewBox.width  - combinedBoundingBox.width,
+		y: viewBox.height  - combinedBoundingBox.height
+	};
+
+	var translation = [
+		'T',
+		targetOrigin.x - combinedBoundingBox.x,
+		targetOrigin.y - combinedBoundingBox.y
+	];
+
+	// Add transform to each part...
 }
