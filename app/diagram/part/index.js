@@ -36,7 +36,7 @@ DiagramPart.prototype.joinTransform = function() {
 	return dutil.stringifyCommandList( this.transform );
 };
 
-DiagramPart.prototype.getBoundingBox = function() {
+DiagramPart.prototype.getBoundingBox = function getBoundingBox() {
 	// Get all non-Text shapes.
 	// Path:
 	// - Raphael.transformPath()
@@ -46,8 +46,4 @@ DiagramPart.prototype.getBoundingBox = function() {
 	// - create BB from proxy. (make sure has width = 2*radius, centered on proxy box.)
 	// Text:
 	// - Ignore for our purposes.
-
-	// Something like
-	// var transformedCommands = Raphael.transformPath( this.pathCommands, transform );
-	// return Raphael.pathBBox( transformedCommands );
 };

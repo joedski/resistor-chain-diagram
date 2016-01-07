@@ -45,6 +45,11 @@ Path.prototype.draw = function( part, paper ) {
 	return element;
 };
 
+Path.prototype.boundingBox = function( part ) {
+	var transformedPath = Raphael.transformPath( this.pathCommands, part.transform );
+	return Raphael.pathBBox( transformedCommands );
+};
+
 
 
 ////////
@@ -73,6 +78,10 @@ Text.prototype.draw = function( part, paper ) {
 	return element;
 };
 
+Text.prototype.boundingBox = function( part ) {
+	return null;
+};
+
 
 
 ////////
@@ -95,4 +104,31 @@ Circle.prototype.draw = function( part, paper ) {
 	element.transform( part.joinTransform() );
 
 	return element;
+};
+
+Circle.prototype.boundingBox = function( part ) {
+	var proxyShape = [
+		[ 'M', -this.radius, -this.radius ],
+		[ 'L',
+			-this.radius, this.radius,
+			this.radius, this.radius,
+			this.radius, -this.radius
+		],
+		[ 'Z' ]
+	];
+
+	var transformedPath = Raphael.transformPath( proxyShape, part.transform );
+	var proxyBoundingBox = Raphael.pathBBox( transformedCommands );
+
+	var xDifference = proxyBoundingBox.width / 2 - this.radius;
+	var yDifference = proxyBoundingBox.height / 2 - this.radius;
+
+	return {
+		x: proxyBoundingBox.x + xDifference,
+		y: proxyBoundingBox.y + yDifference,
+		x2: proxyBoundingBox.x2 - xDifference,
+		y2: proxyBoundingBox.y2 - yDifference,
+		width: this.radius,
+		height: this.radius
+	};
 };
