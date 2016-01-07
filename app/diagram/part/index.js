@@ -40,7 +40,7 @@ DiagramPart.prototype.joinTransform = function() {
 
 DiagramPart.prototype.getBoundingBox = function getBoundingBox() {
 	var boundingBoxes = this.shapes
-		.map( function( shape ) { return sahpe.boundingBox( this ); }.bind( this ))
+		.map( function( shape ) { return shape.boundingBox( this ); }.bind( this ))
 		.filter( function( box ) { return !! box; })
 		;
 

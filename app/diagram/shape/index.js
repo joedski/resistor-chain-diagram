@@ -47,7 +47,7 @@ Path.prototype.draw = function( part, paper ) {
 
 Path.prototype.boundingBox = function( part ) {
 	var transformedPath = Raphael.transformPath( this.pathCommands, part.transform );
-	return Raphael.pathBBox( transformedCommands );
+	return Raphael.pathBBox( transformedPath );
 };
 
 
@@ -118,7 +118,7 @@ Circle.prototype.boundingBox = function( part ) {
 	];
 
 	var transformedPath = Raphael.transformPath( proxyShape, part.transform );
-	var proxyBoundingBox = Raphael.pathBBox( transformedCommands );
+	var proxyBoundingBox = Raphael.pathBBox( transformedPath );
 
 	var xDifference = proxyBoundingBox.width / 2 - this.radius;
 	var yDifference = proxyBoundingBox.height / 2 - this.radius;

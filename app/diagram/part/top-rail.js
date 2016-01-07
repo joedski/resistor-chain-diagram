@@ -2,7 +2,7 @@ var DiagramPart = require( '.' ).DiagramPart;
 var shape = require( '../shape' );
 var dutil = require( '../util' );
 
-exports.TopRail = TopRail;
+module.exports = TopRail;
 function TopRail( name, options ) {
 	DiagramPart.apply( this, arguments );
 

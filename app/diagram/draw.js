@@ -52,7 +52,7 @@ function addTopRail( drawing, voltage ) {
 function addVoltageLevelAndResistor( drawing, voltage, resistance, humanReadableIndex ) {
 	// Previous Shapes
 	var previousPart = lastRailOrResistor( drawing.parts );
-	var previousPartAnchor = (part instanceof part.Resistor) ? 'b' : 'a';
+	var previousPartAnchor = (previousPart instanceof part.Resistor) ? 'b' : 'a';
 
 	// Shapes to add
 	var indexString = String( humanReadableIndex );
@@ -81,11 +81,11 @@ function addVoltageLevelAndResistor( drawing, voltage, resistance, humanReadable
 function addBottomRail( drawing, voltage ) {
 	// Previous Shapes
 	var previousPart = lastRailOrResistor( drawing.parts );
-	var previousPartAnchor = (part instanceof part.Resistor) ? 'b' : 'a';
+	var previousPartAnchor = (previousPart instanceof part.Resistor) ? 'b' : 'a';
 
 	var bottomRail;
 
-	if( voltage === 0 ) {
+	if( voltage === 0 || /^0+[a-zA-Z]*$/.test( voltage ) ) {
 		bottomRail = new part.Ground( 'V-', {} );
 	}
 	else {
@@ -101,8 +101,8 @@ function addBottomRail( drawing, voltage ) {
 }
 
 function lastRailOrResistor( parts ) {
-	var onlyTopRailOrResistors = parts.filter( function isRailOrResistor( part ) {
-		return (part instanceof part.TopRail) || (part instanceof part.Resistor);
+	var onlyTopRailOrResistors = parts.filter( function isRailOrResistor( drawingPart ) {
+		return (drawingPart instanceof part.TopRail) || (drawingPart instanceof part.Resistor);
 	});
 
 	return onlyTopRailOrResistors[ onlyTopRailOrResistors.length - 1 ];
@@ -194,8 +194,8 @@ function drawToPaper( paper, drawing ) {
 	};
 
 	var targetOrigin = {
-		x: viewBox.width  - combinedBoundingBox.width,
-		y: viewBox.height  - combinedBoundingBox.height
+		x: (viewBox.width - combinedBoundingBox.width) / 2,
+		y: (viewBox.height - combinedBoundingBox.height) / 2
 	};
 
 	var translation = [
@@ -213,7 +213,7 @@ function drawToPaper( paper, drawing ) {
 			return part.drawToPaper( paper );
 		})
 		.reduce( function concatDrawnElements( allElements, elementsList ) {
-			return elements.concat( elementsList );
+			return allElements.concat( elementsList );
 		}, [] )
 		;
 

@@ -8,6 +8,8 @@ function BottomRail( name, options ) {
 
 	this.voltage = options.voltage;
 
+	var railWidth = 2;
+
 	this.shapes = [
 		shape.path([
 			[ 'M', 0, 0 ],
