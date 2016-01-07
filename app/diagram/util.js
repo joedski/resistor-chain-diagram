@@ -55,8 +55,8 @@ function untransformPoint( transform, point, contextPath ) {
 	];
 }
 
-exports.boundingBoxContaining = boundingBoxContaining;
-function boundingBoxContaining( boundingBoxList ) {
+exports.boundingBoxEncompassing = boundingBoxEncompassing;
+function boundingBoxEncompassing( boundingBoxList ) {
 	var firstBox = boundingBoxList[ 0 ];
 	var restBoxes = boundingBoxList.slice( 1 );
 

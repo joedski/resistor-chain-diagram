@@ -27,9 +27,11 @@ DiagramPart.prototype.shapes = null;
 DiagramPart.prototype.anchors = {};
 
 DiagramPart.prototype.drawToPaper = function drawToPaper( paper ) {
-	var elements = this.shapes.forEach( function drawSingleShape( shape ) {
+	var elements = this.shapes.map( function drawSingleShape( shape ) {
 		return shape.draw( this, paper );
 	}.bind( this ));
+
+	return elements;
 };
 
 DiagramPart.prototype.joinTransform = function() {
@@ -37,13 +39,15 @@ DiagramPart.prototype.joinTransform = function() {
 };
 
 DiagramPart.prototype.getBoundingBox = function getBoundingBox() {
-	// Get all non-Text shapes.
-	// Path:
-	// - Raphael.transformPath()
-	// - Raphael.pathBBox()
-	// Circle:
-	// - Raphael.transformPath on proxy box.
-	// - create BB from proxy. (make sure has width = 2*radius, centered on proxy box.)
-	// Text:
-	// - Ignore for our purposes.
+	var boundingBoxes = this.shapes
+		.map( function( shape ) { return sahpe.boundingBox( this ); }.bind( this ))
+		.filter( function( box ) { return !! box; })
+		;
+
+	if( boundingBoxes.length ) {
+		return dutil.boundingBoxEncompassing( boundingBoxes );
+	}
+	else {
+		return null;
+	}
 };

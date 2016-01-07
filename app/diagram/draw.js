@@ -175,10 +175,12 @@ function drawToPaper( paper, drawing ) {
 		})
 		;
 
-	var combinedBoundingBox = util.boundingBoxContaining( boundingBoxes );
+	var combinedBoundingBox = util.boundingBoxEncompassing( boundingBoxes );
 
 	if( ! combinedBoundingBox ) {
 		console.warn( "Drawing generated no bounding box!  It may be composed entirely of text." );
+
+		combinedBoundingBox = { width: 0, height: 0 };
 	}
 
 	// Most accurate instantaneous view box is this, I think,
@@ -198,9 +200,22 @@ function drawToPaper( paper, drawing ) {
 
 	var translation = [
 		'T',
-		targetOrigin.x - combinedBoundingBox.x,
-		targetOrigin.y - combinedBoundingBox.y
+		targetOrigin.x - (('x' in combinedBoundingBox) ? combinedBoundingBox.x : targetOrigin.x),
+		targetOrigin.y - (('y' in combinedBoundingBox) ? combinedBoundingBox.y : targetOrigin.y)
 	];
 
-	// Add transform to each part...
+	drawing.parts.forEach( function addTranslation( part ) {
+		part.transform.push( translation );
+	});
+
+	var elements = drawing.parts
+		.map( function drawPartToPaper( part ) {
+			return part.drawToPaper( paper );
+		})
+		.reduce( function concatDrawnElements( allElements, elementsList ) {
+			return elements.concat( elementsList );
+		}, [] )
+		;
+
+	return elements;
 }
